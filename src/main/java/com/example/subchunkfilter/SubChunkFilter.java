@@ -58,22 +58,13 @@ public class SubChunkFilter extends JavaPlugin {
 
     private void processChunkPacket(PacketEvent event) throws IOException {
         var packet = event.getPacket();
-        byte[] original = packet.getByteArrays().read(0);
-
-        DataInputStream  in  = new DataInputStream(new ByteArrayInputStream(original));
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(original.length);
-        DataOutputStream out = new DataOutputStream(baos);
-
-        for (int s = 0; s < TOTAL_SECTIONS; s++) {
-            if (s < SURFACE_SECTION) {
-                skipSection(in);          // discard real underground data
-                writeEmptySection(out);   // send air instead
-            } else {
-                copySection(in, out);     // pass through untouched
-            }
+        
+        // DEBUG: log how many byte arrays exist and their sizes
+        int count = packet.getByteArrays().size();
+        for (int i = 0; i < count; i++) {
+            byte[] arr = packet.getByteArrays().read(i);
+            getLogger().info("ByteArray[" + i + "] length = " + arr.length);
         }
-
-        packet.getByteArrays().write(0, baos.toByteArray());
     }
 
     // -----------------------------------------------------------------------
