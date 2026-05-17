@@ -1,6 +1,7 @@
 name: SubChunkFilter
 version: 1.0
 main: com.example.subchunkfilter.SubChunkFilter
-description: A plugin for filtering sub chunks
-authors:
-  - notkalilinus
+api-version: '1.21'
+description: Hides underground chunk sections from players above Y=0
+depend:
+  - ProtocolLib
